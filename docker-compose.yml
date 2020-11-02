@@ -1,0 +1,53 @@
+version: '3.3'
+services:
+    redis:
+        image: redis
+        command: redis-server --requirepass redispass123
+        container_name: redis
+        environment: 
+            - REDIS_PORT=6379
+            - REDIS_PASSWORD=redispass123
+        
+        networks:
+            - deploy
+        volumes:
+            - ./redis-data:/var/lib/redis
+
+    postgres:
+        image: postgres
+        container_name: postgres
+        environment:
+            - POSTGRES_USER=super
+            - POSTGRES_PASSWORD=hahaha321
+            - POSTGRES_DB=mydb
+        networks: 
+            - deploy
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
+
+    nodejs:
+        image: backend:1.4.0
+        ports:
+            - 2000:2000
+        depends_on:
+            - postgres
+            - redis    
+        networks:
+            - deploy
+        environment: 
+            - DB_USER=postgres
+            - DB_DATABASE=mydb
+            - DB_PASS=hahaha321
+            - DB_HOST=postgres
+            - REDIS_HOST=redis
+            - REDIS_PASS=redispass123
+            - REDIS_PORT=6379
+            - JWT_KEYS=awokawokawok
+
+networks:
+    deploy:
+        driver: bridge
+    
+volumes:
+    postgres-data:
+    redis-data:
