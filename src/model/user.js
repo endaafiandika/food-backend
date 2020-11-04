@@ -28,10 +28,12 @@ user.Add = (data) => {
 
 
 user.getByUser = (user) => {
+    console.log(user)
     return new Promise((resolve, reject) => {
         database.query(`SELECT * FROM users WHERE username = '${user}'`)
             .then((res) => {
                 resolve(res.rows)
+                console.log(res.rows)
             })
             .catch((err) => {
                 reject(err)

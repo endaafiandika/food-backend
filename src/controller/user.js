@@ -32,10 +32,11 @@ class Users {
             try {
                 const passHash = await hashPassword(req.body.password)
                 const data = {
-                    name : req.body.username,
+                    username : req.body.username,
                     password : passHash,
                     status : req.body.status,
                 }
+                console.log(data)
                 const result = await model.Add(data)
                 return respon (res, 200, data)
             } catch (error) {

@@ -7,14 +7,15 @@ class Auth {
 login = async(req, res) => {
     try {
         const passDB = await model.getByUser(req.body.username)
-        console
-        
+        console.log(passDB)
+       
         if (passDB <= 0 ){
             return respon(res, 200, "Username tidak Ada")
         }
 
         const passReq  = req.body.password
         const check = await bcr.compare(passReq, passDB[0].password)
+    
 
         if(check) {
             const result = await this.setToken(passDB[0].status)
