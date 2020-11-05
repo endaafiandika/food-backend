@@ -1,5 +1,15 @@
 version: '3.3'
 services:
+    demo-pgadmin4: 
+        image: dpage/pgadmin4
+        environment: 
+            PGADMIN_DEFAULT_EMAIL: testes@gmail.com
+            PGADMIN_DEFAULT_PASSWORD: testes
+        ports: 
+            - 7171:80
+        networks: 
+            - deploy
+
     redis:
         image: redis
         command: redis-server --requirepass redispass123
@@ -17,18 +27,18 @@ services:
         image: postgres
         container_name: postgres
         environment:
-            - POSTGRES_USER=super
-            - POSTGRES_PASSWORD=hahaha321
-            - POSTGRES_DB=mydb
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=kodekonan
+            - POSTGRES_DB=kopishop
         networks: 
             - deploy
         volumes:
             - ./postgres-data:/var/lib/postgresql/data
 
     nodejs:
-        image: backend:1.4.0
+        image: endaafiandika/food-backend
         ports:
-            - 2000:2000
+            - 4000:4000
         depends_on:
             - postgres
             - redis    
@@ -36,13 +46,13 @@ services:
             - deploy
         environment: 
             - DB_USER=postgres
-            - DB_DATABASE=mydb
-            - DB_PASS=hahaha321
+            - DB_DATABASE=kopishop
+            - DB_PASS=cahbacem2012
             - DB_HOST=postgres
             - REDIS_HOST=redis
             - REDIS_PASS=redispass123
             - REDIS_PORT=6379
-            - JWT_KEYS=awokawokawok
+            - JWT_KEYS=regdfgdfgdfg
 
 networks:
     deploy:
