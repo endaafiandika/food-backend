@@ -47,7 +47,7 @@ services:
         environment: 
             - DB_USER=postgres
             - DB_DATABASE=kopishop
-            - DB_PASS=cahbacem2012
+            - DB_PASS=kodekonan
             - DB_HOST=postgres
             - REDIS_HOST=redis
             - REDIS_PASS=redispass123
